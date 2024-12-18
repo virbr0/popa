@@ -29,7 +29,7 @@ func Search(apiKey string, favHash int, numPages int) []string {
 		if err != nil {
 			log.Fatalf("Failed to make request: %v", err)
 		}
-		defer resp.Body.Close()
+		// defer resp.Body.Close()
 
 		// Check if the HTTP response status is OK
 		if resp.StatusCode != http.StatusOK {
@@ -54,6 +54,7 @@ func Search(apiKey string, favHash int, numPages int) []string {
 		}
 
 	}
+
 	return ipMatches
 
 }

@@ -72,7 +72,7 @@ func getURL(tgt *string) (*URLContent, error) {
 	}
 
 	// Create http req. todo: add multiple http verbs
-	req, err := http.NewRequest("GET", *tgt, nil)
+	req, err := http.NewRequest("GET", *tgt, http.NoBody)
 
 	// Set user-agent
 	req.Header.Set("User-Agent", "popa")
@@ -123,7 +123,7 @@ func getTargetDetails(tgt *string) (int, *URLContent) {
 
 	// Check if favURL relative or absolute
 	fullFav := favURL
-	pattern := regexp.MustCompile(`^(http|https):\/\/[^\s/$.?#].[^\s]*$`)
+	pattern := regexp.MustCompile(`^(https?)://[^\s/$.?#].\S*$`)
 
 	if !pattern.MatchString(favURL) {
 		fullFav = fmt.Sprintf("%s%s", *tgt, favURL)
@@ -187,16 +187,17 @@ func checkSimilar(ipMatches []string, targetContent *URLContent) {
 
 			switch {
 
+				// Traffic light colours make it more exciting
 			case similarityResult > 95.0:
 				fmt.Printf("\033[32m%s\033[0m", resultFormat)
 
 			case similarityResult > 85:
-				fmt.Printf("\033[33m%s\033[0m", resultFormat)
-
-			case similarityResult <= 85:
 				fmt.Printf("\033[38;5;208m%s\033[0m", resultFormat)
 
-			case similarityResult < 70:
+			case similarityResult > 75:
+				fmt.Printf("\033[33m%s\033[0m", resultFormat)
+
+			case similarityResult > 65:
 				fmt.Printf("\033[31m%s\033[0m", resultFormat)
 
 			}

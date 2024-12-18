@@ -19,7 +19,7 @@ func CalcByteSimilarity(tgtContent, ipContent []byte) float64 {
 	}
 
 	// Calculate cosine similarity
-	// GPT hook me uppp
+	// ChatGPT hook me uppp
 	dotProduct := 0.0
 	magnitude1 := 0.0
 	magnitude2 := 0.0
